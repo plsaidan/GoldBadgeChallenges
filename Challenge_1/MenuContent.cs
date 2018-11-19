@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace Challenge_1
 {
-    public class MenuContent
+    class MenuContent
     {
         public int MealNumber { get; set; }
         public string MealName { get; set; }
         public string Description { get; set; }
-        public List<List<Ingredients>> NewIngredients { get; set; }
+        public string Ingredients { get; set; }
 
-        public MenuContent(int mealNumber, string mealName, string description, List<Ingredients> newIngredients)
+        public MenuContent(int mealNumber, string mealName, string description, string ingredients)
         {
             MealNumber = mealNumber;
             MealName = mealName;
             Description = description;
-            NewIngredients = newIngredients;
+            Ingredients = ingredients;
         }
         public MenuContent()
         {

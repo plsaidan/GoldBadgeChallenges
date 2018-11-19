@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Challenge_1
 {
-    public class ProgramUI
+    class ProgramUI
     {
         MenuRepository _menuRepo = new MenuRepository();
 
@@ -20,6 +20,7 @@ namespace Challenge_1
             bool isRunning = true;
             while (isRunning)
             {
+                Console.Clear();
                 Console.WriteLine("Welcome To Komodo Kafe Menu Editor. Please choose and action:" +
                     "\n1. Add Items to Menu" +
                     "\n2. See Current Menu" +
@@ -33,9 +34,12 @@ namespace Challenge_1
                         AddItemsToMenu();
                         break;
                     case 2:
+                        Console.Clear();
                         PrintMenu();
+                        Console.ReadLine();
                         break;
                     case 3:
+                        RemoveItemsFromMenu();
                         break;
                     case 4:
                         isRunning = false;
@@ -51,6 +55,7 @@ namespace Challenge_1
         }
         public void AddItemsToMenu()
         {
+            Console.Clear();
             MenuContent newContent = new MenuContent();
             Console.WriteLine("What number do you wish to assign This meal?");
             newContent.MealNumber = int.Parse(Console.ReadLine());
@@ -62,13 +67,43 @@ namespace Challenge_1
             newContent.Description = Console.ReadLine();
 
             Console.WriteLine("\nPLease add a list of ingredients used in the dish.");
-            newContent.Ingredients = AddIngredients();
-            
+            newContent.Ingredients = Console.ReadLine();
+
+            _menuRepo.AddItemToMenu(newContent);
         }
-        public void AddIngredients()
+        public void PrintMenu()
         {
-            Ingredients newItem = new Ingredients();
+            List<MenuContent> menuList = _menuRepo.GetMenuItems();
+            foreach (MenuContent menuContent in menuList)
+            {
+                Console.WriteLine($"Meal #: {menuContent.MealNumber}" +
+                    $"\nMeal Name: {menuContent.MealName}" +
+                    $"\nDescription:{menuContent.Description}" +
+                    $"\nIngredients: {menuContent.Ingredients}");
+            }
+
         }
-            
+        public void RemoveItemsFromMenu()
+        {
+            List<MenuContent> menu = _menuRepo.GetMenuItems();
+
+            int meal;
+
+            Console.WriteLine("Please Enter The Meal Number of the Meal you'd like deleted");
+            bool isMeal = int.TryParse(Console.ReadLine(), out meal);
+            if (isMeal)
+            {
+                foreach (MenuContent content in menu.ToList())
+                {
+                    if (meal == content.MealNumber)
+                    {
+                        _menuRepo.RemoveItemFromList(content);
+                    }
+
+                }
+            }
+
+        }
+
     }
 }

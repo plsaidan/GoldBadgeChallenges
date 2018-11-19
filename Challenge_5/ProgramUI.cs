@@ -23,7 +23,7 @@ namespace Challenge_5
                 Console.WriteLine("Welcome To Komodo's brand new Mass Emailing System, What would you like to do today?" +
                     "\n1. Add Person to Mailing List" +
                     "\n2. Read Mailing List" +
-                    "\n3. Update the Mailing List" +
+                    "\n3. Remove Person from Mailing List" +
                     "\n4. Exit");
                 int input = int.Parse(Console.ReadLine());
                 switch (input)
@@ -31,7 +31,7 @@ namespace Challenge_5
                     case 1:
                         AddtoMailingList();
                         break;
-                    case 2;
+                    case 2:
                         ViewMailingList();
                         break;
                     case 3:
@@ -39,6 +39,7 @@ namespace Challenge_5
                         break;
                     case 4:
                         Console.WriteLine("Thank you for using Komodo's Mass Emailing System");
+                        Console.ReadLine();
                         isRunning = false;
                         break;
                 }
@@ -74,11 +75,39 @@ namespace Challenge_5
                     customer.Email = "It's been a long time since we've heard from you, we want you back";
                     break;
             }
-            
+
+            _customerRepo.AddCustomerToList(customer);
+
         }
         public void ViewMailingList()
         {
+            Console.Clear();
+            List<Customer> customerList = _customerRepo.GetCustomerList();
+            Console.WriteLine("First Name\tLast Name\tType\t\tEmail");
+            var orderedList = customerList.OrderBy(c => c.LastName).ToList();
+            foreach (Customer customer in orderedList)
+            {
+                Console.WriteLine($"{customer.FirstName}\t\t{customer.LastName}\t\t{(CustomerType)customer.CustomerType}\t\t{customer.Email}");
+            }
+            Console.ReadLine();
+        }
+        public void UpdateMailingList()
+        {
+            List<Customer> customers = _customerRepo.GetCustomerList();
+            ViewMailingList();
 
+            Console.WriteLine("Please Enter The First Name of the Customer you wish to Remove And Update");
+            var Name1 = Console.ReadLine();
+            Console.WriteLine("Customer Name Recieved, Press Enter");
+            foreach (Customer customer in customers.ToList())
+            {
+                if (Name1 == customer.FirstName)
+                    _customerRepo.RemoveCustomer(customer);
+            }
+
+            Console.Clear();
+            Console.WriteLine("Alright Lets get This fixed");
+            AddtoMailingList();
         }
     }
 }

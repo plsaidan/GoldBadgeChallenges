@@ -10,13 +10,17 @@ namespace Challenge_5
     {
         List<Customer> _listOfCustomers = new List<Customer>();
 
-        public void AddCustomerToList(Customer outing)
+        public void AddCustomerToList(Customer customer)
         {
-            _listOfCustomers.Add(outing);
+            _listOfCustomers.Add(customer);
         }
         public List<Customer> GetCustomerList()
         {
             return _listOfCustomers;
+        }
+        public void RemoveCustomer(Customer customers)
+        {
+            _listOfCustomers.Remove(customers);
         }
     }
 }

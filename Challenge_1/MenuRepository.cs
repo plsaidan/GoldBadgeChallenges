@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Challenge_1
 {
-    public class MenuRepository
+    class MenuRepository
     {
         List<MenuContent> _listOfMenuItems = new List<MenuContent>();
-    
+
 
         public void AddItemToMenu(MenuContent content)
         {
@@ -18,6 +18,10 @@ namespace Challenge_1
         public List<MenuContent> GetMenuItems()
         {
             return _listOfMenuItems;
+        }
+        public void RemoveItemFromList(MenuContent content)
+        {
+            _listOfMenuItems.Remove(content);
         }
     }
 }
